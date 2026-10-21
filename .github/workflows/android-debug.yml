@@ -62,6 +62,9 @@ jobs:
           test -s "$apk"
           unzip -Z1 "$apk" | grep -Fxq 'assets/index.html'
           unzip -Z1 "$apk" | grep -Fxq 'assets/assets/logo-oficial.png'
+          unzip -p "$apk" assets/index.html | grep -q 'data-angel-v5-ready'
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$apk" | grep -Fq "name='pr.angelslife.forms.preview05'"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$apk" | grep -Fq "versionName='0.5.0-test'"
           echo "Offline HTML and official logo are packaged in APK"
 
       - name: Upload debug APK

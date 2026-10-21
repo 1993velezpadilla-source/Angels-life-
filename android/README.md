@@ -48,3 +48,19 @@ Sources checked on 2026-10-21:
 
 Browser CI now runs `python3 tests/test_form_browser.py` against real Chrome to
 exercise dropdowns, checkbox rendering, signatures, printing mirrors and tabs.
+
+## V5 TEST installation / signing fix (21 Oct 2026)
+
+Every GitHub-hosted **debug** build uses a temporary Android debug signing
+keystore. Android rejects updates when signer certificates differ, even if the
+versionCode increases. The 0.3.2 and 0.4.0 APKs had different signing
+certificates; trying to install one over the other can leave the older app on
+the phone. V5 TEST therefore has its own **distinct package ID**:
+`pr.angelslife.forms.preview05` and launcher label **ANGEL LIFE V5 TEST**.
+It installs **beside** the older prototype rather than silently failing to
+upgrade it. Open the app with the **V5 TEST** label, not the old ANGEL'S LIFE.
+
+This is intentionally a temporary testing solution, not a long-term release
+signing solution. Proper upgrades will require one stable protected signing
+key/keystore stored as a repository secret or a secure build service, never
+committed into this public repository.
