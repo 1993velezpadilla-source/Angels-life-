@@ -1,28 +1,59 @@
 name: Android prototype APK
+
 on:
   workflow_dispatch:
   push:
     paths:
       - 'android/**'
       - 'index.html'
+      - 'assets/**'
       - '.github/workflows/android-debug.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: angels-life-android-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
+
+      # GitHub's Ubuntu runner already provides the Android command-line SDK.
+      # android-actions/setup-android@v3 used "sdkmanager tools", a removed SDK
+      # package, and failed before Gradle was ever reached.
+      - name: Prepare Android SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "ANDROID_HOME=${ANDROID_HOME:-}"
+          test -n "${ANDROID_HOME:-}" && test -d "$ANDROID_HOME"
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -n1)"
+          test -n "$SDKMANAGER"
+          "$SDKMANAGER" --install "platforms;android-35" "build-tools;35.0.0"
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+
       - name: Assemble debug APK
         working-directory: android
-        run: gradle :app:assembleDebug --no-daemon
-      - uses: actions/upload-artifact@v4
+        run: gradle :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Upload debug APK
+        if: success()
+        uses: actions/upload-artifact@v4
         with:
           name: angels-life-prototype-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
