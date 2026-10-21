@@ -1,8 +1,44 @@
-plugins { id 'com.android.application' }
+plugins {
+    id 'com.android.application'
+}
+
 android {
- namespace 'pr.angelslife.forms'
- compileSdk 35
- defaultConfig { applicationId 'pr.angelslife.forms'; minSdk 26; targetSdk 35; versionCode 1; versionName '0.3.0-prototype' }
- compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
- sourceSets { main { assets.srcDirs = ['../../'] } }
+    namespace 'pr.angelslife.forms'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'pr.angelslife.forms'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '0.3.1-prototype'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // Never point assets.srcDirs at the repository root: it includes Gradle
+    // outputs and .git, which breaks Gradle dependency validation and bloats APK.
+    sourceSets {
+        main {
+            assets.srcDirs = [layout.buildDirectory.dir('generated/web-assets').get().asFile]
+        }
+    }
+}
+
+// Only package the offline form and the approved official logo.
+def stageWebAssets = tasks.register('stageWebAssets', Sync) {
+    into(layout.buildDirectory.dir('generated/web-assets'))
+    from(rootProject.file('../index.html'))
+    from(rootProject.file('../assets')) {
+        into('assets')
+        include('logo-oficial.png')
+    }
+}
+tasks.configureEach {
+    if (name.startsWith('merge') && name.endsWith('Assets')) {
+        dependsOn(stageWebAssets)
+    }
 }
