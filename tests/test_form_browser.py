@@ -110,3 +110,13 @@ with tempfile.TemporaryDirectory(prefix="angel-browser-") as directory:
         print("stderr:",result.stderr[-2500:])
         sys.exit(1)
     print(match.group(1))
+    # Also exercise Chrome's real PDF rendering path with synthetic form data.
+    pdf=Path(directory)/"printed-incident.pdf"
+    pdf_cmd=[BROWSER,"--headless","--no-sandbox","--disable-gpu",
+             "--disable-dev-shm-usage","--virtual-time-budget=3500",
+             "--no-pdf-header-footer","--print-to-pdf="+str(pdf),p.as_uri()]
+    printed=subprocess.run(pdf_cmd,text=True,capture_output=True,timeout=80)
+    if printed.returncode or not pdf.exists() or pdf.stat().st_size<12000 or pdf.read_bytes()[:4]!=b"%PDF":
+        print("PDF_RENDER_FAIL",printed.returncode,printed.stderr[-1500:])
+        sys.exit(1)
+    print("PDF_RENDER_PASS",pdf.stat().st_size,"bytes")
