@@ -2,6 +2,108 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ANGEL'S LIFE · Formularios</title>
 <style>
 :root{font-family:system-ui,Arial,sans-serif;color:#132c48;background:#eaf1f8}*{box-sizing:border-box}body{margin:0}header{background:#092542;color:white;padding:14px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px;flex:1;min-width:230px}.brand img{height:64px;width:64px;object-fit:contain}.brand strong{font-size:clamp(21px,3vw,32px)}.brand small{display:block}button{border:0;border-radius:8px;padding:12px 15px;background:#1765a4;color:white;font-weight:700;cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #ffca4e}.tabs{display:flex;gap:8px;flex-wrap:wrap;padding:12px;background:#d5e3f1}.tabs button[aria-selected=true]{background:#f5c74e;color:#122a45}main{padding:14px;max-width:1600px;margin:auto}.sheet{background:white;border:1px solid #a9c1d6;border-radius:12px;padding:15px;margin-bottom:14px}.sheet[hidden]{display:none}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px}.field{grid-column:span 3;min-width:0}.field.wide{grid-column:span 6}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;border:1px solid #9dbbd2;border-radius:6px;padding:11px;background:#f1f8ff;font:inherit}textarea{min-height:140px;resize:vertical}.notes{min-height:360px}.section{margin:18px 0 9px;padding:8px 11px;background:#0b416c;color:white;border-radius:6px;font-weight:800}.codes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.code{border:1px solid #b4c8d9;border-radius:7px;padding:9px}.code .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{display:inline-flex;align-items:center;gap:5px;margin:8px 12px 8px 0}.check input{width:auto}.notice{padding:12px;border-left:5px solid #e3aa24;background:#fff2ce;margin:10px 0}.signature{height:105px;width:100%;border:1px solid #9dbbd2;touch-action:none;background:#f5faff;border-radius:6px}@media(max-width:850px){.field,.field.wide{grid-column:span 6}.codes{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.field,.field.wide{grid-column:1/-1}.codes{grid-template-columns:1fr}.brand img{height:48px;width:48px}}body.android-app header>button{display:none!important}@media print{header{display:flex!important;background:#fff!important;color:#000!important;border-bottom:1px solid #777!important;padding:4px 0 10px!important}header>button,.tabs,.notice,.noprint{display:none!important}body{background:white}.sheet{border:0;padding:0}.sheet[hidden]{display:none!important}textarea{min-height:120px}}
+</style><style id="angel-v4-style">
+
+/* Angel Life v0.4 responsive field experience */
+:root{--navy:#102d48;--blue:#13669c;--pale:#f4f9fd;--line:#b4c8d8;--gold:#efc34f}
+html{scroll-behavior:smooth;scroll-padding-top:160px}body{line-height:1.4}
+header{position:relative;z-index:3}
+.tabs{position:sticky;top:0;z-index:9;gap:8px;padding:10px 12px;border-bottom:1px solid #a8c4d9;box-shadow:0 3px 10px #19395416}
+.tabs button{flex:1;min-height:48px;max-width:none;border-radius:10px;background:#e8f2f9;color:#123655;border:2px solid #a9c7da;font-size:clamp(13px,2.9vw,17px);padding:10px 8px;white-space:normal}
+.tabs button[aria-selected="true"]{color:#102d48;background:#f5c74e;border-color:#a77813;box-shadow:inset 0 -3px 0 #b58c25}
+main{max-width:1050px;padding:12px;margin:auto}
+.notice{font-size:13px;border-radius:9px}
+.sheet{border-radius:14px;padding:16px}
+.section{font-size:17px;letter-spacing:.02em;border-radius:8px;margin:20px 0 12px;padding:12px 14px}
+#assessment{display:block}
+#incident-signatures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ale-card{border:1px solid #acc7da;background:#fff;border-radius:12px;padding:14px;margin-bottom:14px;break-inside:avoid-page}
+.ale-card h3{margin:0 0 7px;font-size:17px;color:#0b416c}
+.ale-card .sub{margin:0 0 12px;color:#47647b;font-size:13px}
+.ale-card .grid{margin-top:8px}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:8px 0}
+.choice-grid.narrow{grid-template-columns:repeat(2,minmax(0,1fr))}
+.choice{position:relative;display:flex;align-items:center;min-height:46px;cursor:pointer;border:1px solid #a9c3d7;border-radius:8px;background:#f2f8fd;padding:8px 10px;overflow-wrap:anywhere;gap:7px;line-height:1.23;font-weight:650;font-size:13px;break-inside:avoid}
+.choice input{position:absolute!important;opacity:0!important;height:1px!important;width:1px!important;left:0}
+.choice span:before{content:"☐";color:#245b81;font-size:23px;vertical-align:-2px;margin-right:7px}
+.choice input:checked+span:before{content:"☑";color:#087e62}
+.choice:has(input:checked){background:#e4f6e9;border-color:#198562;color:#15543d}
+.choice:focus-within{outline:3px solid #e1ae20;outline-offset:1px}
+.ale-field{margin:8px 0}.ale-field>label,.ale-field>legend{display:block;font-weight:750;font-size:13px;margin:0 0 6px;color:var(--navy)}
+.ale-field input,.ale-field select,.ale-field textarea{min-height:46px;width:100%;font-size:16px}
+.ale-field textarea{min-height:94px}
+.ale-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ale-row{display:flex;gap:8px;align-items:center}.ale-row>*{min-width:0;flex:1}.ale-row .slash{flex:0;font-weight:800;font-size:23px;color:#165c83}
+.ale-help{font-size:12px;color:#4e6477;margin:7px 0}
+.ale-note{font-size:12px;color:#5c4860;background:#fff9eb;border-left:3px solid #dfad42;padding:7px}
+.ale-inline{display:flex;flex-wrap:wrap;gap:8px}
+.ale-inline .choice{min-width:85px}
+.ale-segment{padding:12px;border:1px solid #b8cbd8;border-radius:11px;margin:0 0 12px;background:#f9fcff}
+.ale-segment h3{font-size:16px;margin:0 0 9px}
+.ale-segment .ale-card{background:#fff}
+.ale-button{border-radius:9px;min-height:46px;padding:9px 14px}
+.quicknav{display:flex;gap:8px;overflow-x:auto;padding:8px 0 12px;scrollbar-width:thin;position:relative}
+.quicknav a{white-space:nowrap;color:#093c60;background:#ecf4fa;border:1px solid #bed2e2;padding:10px 13px;border-radius:99px;font-size:13px;font-weight:800;text-decoration:none;min-height:42px}
+.quicknav a:focus-visible{outline:3px solid #ffc845}
+.sign-card{min-width:0;border:1px solid #9dbace;border-radius:12px;padding:14px;background:#f9fcff;break-inside:avoid}
+.sign-card h3{margin:0 0 5px;font-size:17px;line-height:1.3}
+.sign-card .sub{min-height:16px}
+.sign-card canvas{width:100%;height:130px;border:1px solid #8daec6;border-radius:9px;background:#fff;touch-action:none;display:block}
+.sign-card button{min-height:44px;margin:9px 0 12px}
+.sign-card .ale-field{margin:8px 0}
+.print-value,.print-signature{display:none}
+#vitals .field{grid-column:span 3}
+#vitals .ale-field{grid-column:span 6}
+#vitals .ale-field.bp{grid-column:span 6}
+#patient .ale-field{grid-column:span 6}
+#patient .ale-field.full{grid-column:1/-1}
+@media(max-width:720px){
+ #incident-signatures{grid-template-columns:1fr}
+ .choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #vitals .field{grid-column:span 6}
+ .ale-columns{grid-template-columns:1fr}
+ .sheet{padding:12px}
+}
+@media(max-width:440px){
+ .choice-grid{grid-template-columns:1fr 1fr}
+ .choice{font-size:12px;padding:8px}
+ #patient .ale-field{grid-column:1/-1}
+ .ale-card{padding:12px}
+ .tabs button{font-size:12px}
+}
+@media print{
+ html,body{background:#fff!important;color:#000!important;font-size:10pt!important}
+ .tabs,.notice,.quicknav,.noprint,.sign-card button{display:none!important}
+ header{display:flex!important;background:white!important;color:#000!important;border-bottom:1px solid #777!important;padding:3px 0 8px!important}
+ header>button{display:none!important}
+ .brand img{height:52px!important;width:52px!important}
+ .sheet{border:0!important;padding:0!important;margin:0!important;box-shadow:none!important}
+ .section{background:#e8edf3!important;color:#000!important;border:1px solid #9aa!important;margin:11px 0 7px!important;padding:7px!important}
+ main{width:100%!important;max-width:100%!important;padding:0!important}
+ .ale-card,.ale-segment,.sign-card{background:#fff!important;border:1px solid #8e9aaa!important;padding:8px!important;margin:0 0 8px!important;border-radius:3px!important}
+ .ale-card h3,.ale-segment h3,.sign-card h3{font-size:11pt!important;margin:0 0 5px!important}
+ .choice-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:3px!important}
+ .choice{background:#fff!important;min-height:21px!important;padding:2px 3px!important;border:0!important;font-size:9pt!important;color:#111!important}
+ .choice span:before{color:#000!important;font-size:13pt!important}
+ .ale-columns{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px}
+ .ale-row{gap:4px}
+ .ale-field{margin:3px 0}
+ .ale-field label{font-size:9pt!important}
+ .ale-note,.ale-help{font-size:8pt!important}
+ #incident-signatures{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px}
+ .sign-card canvas{display:none!important}
+ .print-signature{display:block!important;width:100%;max-height:100px;object-fit:contain;border:1px solid #999}
+ .print-value{display:block!important;min-height:22px;line-height:1.3;padding:4px!important;color:#000;white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #aab7c4;border-radius:2px}
+ input:not([type=checkbox]):not([type=radio]),select,textarea{display:none!important}
+ .field{break-inside:avoid}
+ .codes{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .code{padding:4px!important;break-inside:avoid}
+ #vitals .field,#vitals .ale-field{grid-column:span 3!important}
+ .signature:not(.print-signature){display:none!important}
+ a{color:#111}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
 </style></head><body><header><div class="brand"><img src="assets/logo-oficial.png" alt="Logo oficial ANGEL'S LIFE" onerror="this.alt='Logo oficial pendiente';this.style.border='1px dashed white'"><svg width="55" height="65" viewBox="0 0 100 110" role="img" aria-label="Estrella de la Vida"><path d="M40 3h20v31l27-16 11 18-27 16 27 16-11 18-27-16v31H40V70L13 86 2 68l27-16L2 36l11-18 27 16z" fill="#1765a4" stroke="white" stroke-width="3"/><text x="50" y="68" font-size="43" text-anchor="middle" fill="white">⚕</text></svg><div><strong>ANGEL'S LIFE</strong><small>Hatillo, Puerto Rico · Formularios de servicio</small></div></div><button type="button" onclick="window.print()">PDF / Imprimir</button></header>
 <nav class="tabs" aria-label="Formularios"><button aria-selected="true" data-tab="incidente">Hoja de incidente</button><button aria-selected="false" data-tab="hipaa">Ley HIPAA</button><button aria-selected="false" data-tab="progress">Progress Notes</button></nav>
 <main><div class="notice">PROTOTIPO CON DATOS FICTICIOS. No introducir datos reales de pacientes: aún no hay autenticación, cifrado, controles de acceso ni validación legal.</div>
@@ -26,4 +128,224 @@ function signatures(id,names){document.getElementById(id).innerHTML=names.map(n=
 signatures('incident-signatures',['Paciente / encargado','Médico','TEM 1','TEM 2','Rechazo de servicio','Rechazo de transportación']);signatures('hipaa-signatures',['Paciente','Representante','Empleado']);signatures('progress-signatures',['Testigo','Técnico EMS']);
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));document.querySelectorAll('.sheet').forEach(x=>x.hidden=x.id!==b.dataset.tab)});
 document.querySelectorAll('canvas').forEach(c=>{const ctx=c.getContext('2d');c.width=700;c.height=105;ctx.strokeStyle='#163f65';ctx.lineWidth=2;let down=false;const point=e=>{const r=c.getBoundingClientRect();return [(e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height]};c.onpointerdown=e=>{down=true;c.setPointerCapture(e.pointerId);ctx.beginPath();ctx.moveTo(...point(e))};c.onpointermove=e=>{if(down){ctx.lineTo(...point(e));ctx.stroke()}};c.onpointerup=()=>down=false});
+</script><script id="angel-v4-script">
+
+(function angelLifeV4() {
+  'use strict';
+  var patient = document.getElementById('patient');
+  var assessment = document.getElementById('assessment');
+  if (!patient || !assessment) return;
+  document.body.classList.add('angel-v4');
+  // Avoid changing historical values or silently converting unknown abbreviations.
+  var safe = function(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');};
+  var uid=0;
+  var unique=function(){return 'al4-'+(++uid);};
+  function inputField(label,type,other,required) {
+    var id=unique(), attrs=other||'';
+    return '<div class="ale-field'+(label==='Presión arterial'?' bp':'')+'"><label for="'+id+'">'+safe(label)+'</label>'+
+      '<input id="'+id+'" type="'+(type||'text')+'" '+attrs+' '+(required?'required':'')+' autocomplete="off"></div>';
+  }
+  function choices(name,items,kind) {
+    var n=unique();kind=kind||'checkbox';
+    return '<div class="choice-grid" role="group" aria-label="'+safe(name)+'">'+items.map(function(s,i) {
+      var v=unique();return '<label class="choice"><input type="'+kind+'" name="'+n+'" value="'+safe(s)+'"><span>'+safe(s)+'</span></label>';
+    }).join('')+'</div>';
+  }
+  function card(title,html,subtitle) {
+    return '<div class="ale-card"><h3>'+safe(title)+'</h3>'+(subtitle?'<p class="sub">'+safe(subtitle)+'</p>':'')+html+'</div>';
+  }
+  function group(title,items) {return card(title,choices(title,items));}
+  function text(label,placeholder) {return inputField(label,'text',placeholder?'placeholder="'+safe(placeholder)+'"':'');}
+  function planSelect(){
+    var holder=Array.from(patient.querySelectorAll('.field')).find(function(n){return n.querySelector('label') && n.querySelector('label').textContent.trim()==='Plan médico';});
+    if(!holder)return;
+    var id=unique();
+    // Verified 2026 Vital insurers separated from private carriers; historical
+    // and internal billing entries are clearly labeled, not called Vital insurers.
+    holder.outerHTML='<div class="ale-field full"><label for="'+id+'">Plan médico / cubierta</label>'+
+      '<select id="'+id+'" class="plan-selection">'+
+      '<option value="">— Seleccionar plan —</option>'+
+      '<optgroup label="Plan Vital · ASES (2026)">'+
+      ['Vital · First Medical','Vital · MMM Multi Health','Vital · Plan de Salud Menonita','Vital · Triple-S Salud'].map(function(x){return '<option>'+safe(x)+'</option>';}).join('')+
+      '</optgroup><optgroup label="Comercial / Medicare / otros">'+
+      ['ACAA','Auxilio Salud Plus','First Medical · privado','MAPFRE Life','MCS Life / MCS Clásico','Menonita · privado','Ryder Health Plan','Servicios de Salud Bella Vista','Triple-S · privado','MMM / MMM Medicare','PMC / Medicare Advantage','Humana · si aplica','Medicare A/B','Fondo del Seguro del Estado'].map(function(x){return '<option>'+safe(x)+'</option>';}).join('')+
+      '</optgroup><optgroup label="Acuerdo especial / entrada manual">'+
+      ['Compromiso Doctor Center — Arecibo','Plan privado (escribir)','Otro (escribir)'].map(function(x){return '<option>'+safe(x)+'</option>';}).join('')+
+      '</optgroup></select>'+
+      '<div class="ale-field" id="plan-manual-wrap" hidden><label for="plan-manual">Nombre exacto de cubierta / acuerdo</label>'+
+      '<input id="plan-manual" type="text" autocomplete="off" placeholder="Escriba el plan tal como aparece en la tarjeta"></div>'+
+      '<p class="ale-help">Vital: aseguradoras confirmadas por ASES. Otras categorías son referencias de cubierta o facturación; confirmar vigencia con la tarjeta.</p></div>';
+    var sel=document.getElementById(id), manual=document.getElementById('plan-manual-wrap');
+    sel.addEventListener('change',function(){
+      var yes=sel.value.indexOf('(escribir)')!==-1;
+      manual.hidden=!yes;
+      if(!yes) document.getElementById('plan-manual').value='';
+      setupPrintMirrors();
+    });
+  }
+  function sexButtons(){
+    var holder=Array.from(patient.querySelectorAll('.field')).find(function(n){return n.querySelector('label') && n.querySelector('label').textContent.trim()==='Sexo';});
+    if(!holder)return;
+    holder.outerHTML='<div class="ale-field"><label>Sexo (marcar)</label><div class="ale-inline">'+
+      '<label class="choice"><input type="radio" name="sexo-paciente" value="F"><span>F</span></label>'+
+      '<label class="choice"><input type="radio" name="sexo-paciente" value="M"><span>M</span></label>'+
+      '<button class="ale-button noprint" type="button" id="clear-sex" aria-label="Borrar selección de sexo">Borrar</button></div></div>';
+    document.getElementById('clear-sex').onclick=function(){
+      document.querySelectorAll('input[name="sexo-paciente"]').forEach(function(el){el.checked=false;});
+    };
+  }
+  function bloodPressure(){
+    var holder=Array.from(document.querySelectorAll('#vitals .field')).find(function(n){return n.querySelector('label') && n.querySelector('label').textContent.trim()==='Presión';});
+    if(!holder)return;
+    var a=unique(),b=unique();
+    holder.outerHTML='<div class="ale-field bp"><label>Presión arterial (mmHg)</label><div class="ale-row">'+
+      '<div><label for="'+a+'">Sistólica</label><input id="'+a+'" aria-label="Presión sistólica" type="number" min="0" max="350" placeholder="120" inputmode="numeric"></div>'+
+      '<span class="slash" aria-hidden="true">/</span>'+
+      '<div><label for="'+b+'">Diastólica</label><input id="'+b+'" aria-label="Presión diastólica" type="number" min="0" max="250" placeholder="80" inputmode="numeric"></div></div></div>';
+    Array.from(document.querySelectorAll('#vitals .field')).forEach(function(n){
+      var label=n.querySelector('label');
+      if(label && label.textContent.trim()==='R')label.textContent='R · Frecuencia respiratoria';
+      if(label && label.textContent.trim()==='I')label.textContent='I · Abreviatura pendiente de validar';
+    });
+  }
+  planSelect();sexButtons();bloodPressure();
+
+  // Group the form without dropping original, free-text clinical sections.
+  assessment.innerHTML=
+    '<div class="ale-segment"><h3>Examen físico y signos observados</h3>'+
+      '<div class="ale-columns">'+
+       group('Estado de conciencia',['Alerta','Consciente','Orientado','Letárgico','Incoherente','Inconsciente'])+
+       group('Piel',['Normal','Fría','Caliente','Sudorosa','Seca','Cianótica','Húmeda','Pálida','Equimosis'])+
+       group('Pulmones',['Claros','Sibilancias','Estertores','Rales','Matidez','Otro hallazgo'])+
+       group('Pupilas',['Iguales','Reactivas','Anisocoria','No reactivas','Dilatadas','Contraídas'])+
+       card('Pupilas · detalles',text('Ojo izquierdo')+text('Ojo derecho'))+
+       group('Abdomen',['Blando','No doloroso','Duro','Doloroso'])+
+       group('Ritmo cardíaco',['Regular','Irregular','Fuerte','Débil','Ausente'])+
+      '</div></div>'+
+    '<div class="ale-segment"><h3>Intervenciones / administración</h3>'+
+      '<div class="ale-columns">'+
+       card('Oxígeno',text('Oxígeno vía')+inputField('LPM','number','min="0" max="30" step="0.5" inputmode="decimal"'))+
+       card('Suero / Angio',text('Suero')+text('Angio'))+
+       card('Inmovilización',choices('Inmovilización',['No aplica','Collar cervical','Férula','Tabla espinal','Vendaje','Tracción','Otra'])+text('Tipo / detalles'))+
+       card('Mecanismo de trauma',text('Mecanismo de trauma'))+
+      '</div></div>'+
+    '<div class="ale-segment"><h3>Categoría de pago</h3>'+
+      choices('Categoría de pago',['ACAA','Deambulante','F.S.E.','Medicare A / B','Reforma / Vital','SSS','Cash / Efectivo','ATH Móvil','Otro'])+
+      text('Otro / referencia / información de pago')+
+      '<p class="ale-help">Las casillas impresas muestran siempre todas las opciones, seleccionadas o no.</p></div>'+
+    '<div class="ale-segment"><h3>Servicios prestados</h3>'+
+      choices('Servicios prestados',['Evaluación','Transporte y observación','Administración de oxígeno','Suero I.V.','Medicamentos','Monitor (ECG)','Extricación','Inmovilización','Collar cervical','Tracción','Férula','Vendaje o gasa','CPR / RCP','Limpieza vías respiratorias','Intubación','Respiración artificial','Desfibrilación','Marcapaso externo','Control de hemorragia','Aplicación de frío','Coniotomía','Ayuda obstétrica','Terapia respiratoria','Desinfección de herida','Otros'])+
+      text('Otros servicios / notas')+'</div>'+
+    '<div class="ale-segment"><h3>Tratamiento y entrega</h3>'+
+      '<div class="ale-columns">'+
+        card('Tratamiento en',choices('Tratamiento en',['Ambulancia','Escena','Hogar','Otro'])+text('Otro lugar'))+
+        card('Entrega / selección del hospital',choices('Selección del hospital',['Médico','Familiares','Petición del paciente'])+
+           text('Entrega del paciente / persona que recibe'))+
+      '</div><div class="ale-columns">'+
+        card('Facilidades',text('Facilidad que refiere')+text('Facilidad receptora'))+
+        card('Información adicional',text('Nombre / contacto receptor')+text('Observaciones de entrega'))+
+      '</div></div>';
+
+  var signHost=document.getElementById('incident-signatures');
+  var signConfigs=[
+    ['Paciente / encargado','',''],
+    ['Médico','Firma del médico tratante','lic'],
+    ['TEM 1','Firma del técnico de emergencias médicas',''],
+    ['TEM 2','Firma del técnico de emergencias médicas',''],
+    ['Paciente no acepta servicios','Rechazo de servicio (firma del paciente o representante)',''],
+    ['Paciente no acepta transportación','Rechazo de transportación (firma del paciente o representante)','']
+  ];
+  signHost.innerHTML=signConfigs.map(function(arr){
+    var title=arr[0],id=unique(),x=unique(),lic=arr[2]==='lic';
+    return '<article class="sign-card"><h3>'+safe(title)+'</h3>'+
+      '<p class="sub ale-help">'+safe(arr[1]||'Firma correspondiente')+'</p>'+
+      '<canvas class="signature" width="900" height="260" aria-label="Firmar: '+safe(title)+'"></canvas>'+
+      '<img class="print-signature" alt="Firma de '+safe(title)+'">'+
+      '<button class="ale-button noprint" type="button" data-clear-signature>Limpiar firma</button>'+
+      '<div class="ale-field"><label for="'+id+'">Nombre en letra de molde</label><input id="'+id+'" autocomplete="off"></div>'+
+      (lic?'<div class="ale-field"><label for="'+x+'">Licencia del médico (número)</label>'+
+         '<input id="'+x+'" type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Número de licencia" aria-label="Número de licencia del médico"></div>':'')+
+      '</article>';
+  }).join('');
+
+  // Pointer-safe ink: use one pointer at a time; never draw a spurious line after
+  // lifting, scrolling, switching tabs or pointer cancellation.
+  document.querySelectorAll('.sign-card').forEach(function(card){
+    var canvas=card.querySelector('canvas'),picture=card.querySelector('img');
+    var ctx=canvas.getContext('2d'),active=null,prev=null,strokes=0;
+    ctx.lineJoin='round';ctx.lineCap='round';ctx.strokeStyle='#123b65';ctx.lineWidth=3;
+    function at(e){
+      var rect=canvas.getBoundingClientRect();
+      return {x:Math.max(0,Math.min(canvas.width,(e.clientX-rect.left)*canvas.width/rect.width)),
+        y:Math.max(0,Math.min(canvas.height,(e.clientY-rect.top)*canvas.height/rect.height))};
+    }
+    function snapshot(){
+      picture.src=strokes?canvas.toDataURL('image/png'):'';
+      picture.alt=strokes?'Firma capturada':'Sin firma';
+    }
+    canvas.addEventListener('pointerdown',function(e){
+      if(active!==null || !e.isPrimary || (e.pointerType==='mouse' && e.button!==0))return;
+      active=e.pointerId; prev=at(e);
+      try{canvas.setPointerCapture(active);}catch(err){}
+      e.preventDefault();
+    });
+    canvas.addEventListener('pointermove',function(e){
+      if(active!==e.pointerId || !prev)return;
+      var next=at(e);
+      ctx.beginPath();ctx.moveTo(prev.x,prev.y);ctx.lineTo(next.x,next.y);ctx.stroke();
+      strokes++;prev=next;e.preventDefault();
+    });
+    function stop(e){
+      if(active!==e.pointerId)return;
+      active=null;prev=null;snapshot();
+    }
+    canvas.addEventListener('pointerup',stop);
+    canvas.addEventListener('pointercancel',stop);
+    canvas.addEventListener('lostpointercapture',function(){active=null;prev=null;snapshot();});
+    card.querySelector('[data-clear-signature]').addEventListener('click',function(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);strokes=0;snapshot();
+    });
+    snapshot();
+  });
+
+  var nav=document.createElement('div');
+  nav.className='quicknav noprint';nav.setAttribute('aria-label','Saltar a sección del incidente');
+  nav.innerHTML=[
+    ['dispatch','Despacho'],['patient','Paciente'],['hample','HAMPLE'],['vitals','Signos vitales'],
+    ['assessment','Evaluación y servicios'],['incident-signatures','Firmas']
+  ].map(function(a){return '<a href="#'+a[0]+'">'+a[1]+'</a>';}).join('');
+  document.getElementById('incidente').insertBefore(nav,document.getElementById('incidente').firstChild);
+  nav.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click',function(e){
+      e.preventDefault();var el=document.getElementById(link.hash.substring(1));
+      if(el)el.scrollIntoView({block:'start',behavior:'smooth'});
+    });
+  });
+
+  // Render text values in dedicated printable blocks so long entries remain
+  // legible and aren't clipped by HTML inputs in Android's print renderer.
+  function mirror(el) {
+    if(el.dataset.alMirrored || (el.type==='hidden') || !(['INPUT','SELECT','TEXTAREA'].includes(el.tagName)) || el.type==='checkbox'||el.type==='radio')return;
+    el.dataset.alMirrored='1';
+    var view=document.createElement('span');view.className='print-value';view.setAttribute('aria-hidden','true');
+    el.insertAdjacentElement('afterend',view);
+    var update=function(){
+      if(el.tagName==='SELECT'){
+        view.textContent=el.selectedIndex>=0 && el.value?el.options[el.selectedIndex].text:'—';
+      }else view.textContent=el.value||'—';
+    };
+    el.addEventListener('input',update);
+    el.addEventListener('change',update);
+    update();
+  }
+  function setupPrintMirrors(){document.querySelectorAll('input,textarea,select').forEach(mirror);}
+  setupPrintMirrors();
+  // A print request should always refresh visible snapshots (including
+  // fields that were altered by browser autofill without an input event).
+  window.addEventListener('beforeprint',function(){
+    document.querySelectorAll('input[data-al-mirrored],select[data-al-mirrored],textarea[data-al-mirrored]')
+      .forEach(function(el){el.dispatchEvent(new Event('change',{bubbles:false}));});
+  });
+})();
+
 </script></body></html>
