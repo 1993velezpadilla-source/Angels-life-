@@ -1,6 +1,11 @@
 package pr.angelslife.forms;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.view.Gravity;
+import android.widget.TextView;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -45,12 +50,32 @@ public class MainActivity extends Activity {
             return windowInsets;
         });
 
+        // Native V5 identity is visible even if WebView JavaScript fails to run.
+        LinearLayout nativeBar = new LinearLayout(this);
+        nativeBar.setGravity(Gravity.CENTER_VERTICAL);
+        nativeBar.setOrientation(LinearLayout.HORIZONTAL);
+        nativeBar.setPadding(dp(12), dp(4), dp(8), dp(4));
+        nativeBar.setBackgroundColor(Color.rgb(7, 45, 64));
+
+        TextView versionBadge = new TextView(this);
+        versionBadge.setText("ANGEL LIFE · V5 TEST");
+        versionBadge.setTextColor(Color.WHITE);
+        versionBadge.setTextSize(14);
+        versionBadge.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        nativeBar.addView(versionBadge, new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+        versionBadge.setGravity(Gravity.CENTER_VERTICAL);
+
         printButton = new Button(this);
-        printButton.setText("PDF / Imprimir");
+        printButton.setText("Guardar PDF");
         printButton.setAllCaps(false);
+        printButton.setTextColor(Color.WHITE);
+        printButton.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(0, 129, 125)));
         printButton.setEnabled(false);
-        int toolbarHeight = (int) (52 * getResources().getDisplayMetrics().density);
-        shell.addView(printButton, new LinearLayout.LayoutParams(
+        nativeBar.addView(printButton, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        int toolbarHeight = dp(62);
+        shell.addView(nativeBar, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, toolbarHeight));
 
         web = new WebView(this);
@@ -86,6 +111,10 @@ public class MainActivity extends Activity {
 
         printButton.setOnClickListener(v -> printCurrentSheet());
         web.loadUrl("file:///android_asset/index.html");
+    }
+
+    private int dp(int value) {
+        return (int) (value * getResources().getDisplayMetrics().density + 0.5f);
     }
 
     private void printCurrentSheet() {
