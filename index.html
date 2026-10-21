@@ -155,7 +155,7 @@ document.querySelectorAll('canvas').forEach(c=>{const ctx=c.getContext('2d');c.w
   function card(title,html,subtitle) {
     return '<div class="ale-card"><h3>'+safe(title)+'</h3>'+(subtitle?'<p class="sub">'+safe(subtitle)+'</p>':'')+html+'</div>';
   }
-  function group(title,items) {return card(title,choices(title,items));}
+  function group(title,items) {return card(title,choices(title,items)+text('Observaciones adicionales · '+title));}
   function text(label,placeholder) {return inputField(label,'text',placeholder?'placeholder="'+safe(placeholder)+'"':'');}
   function planSelect(){
     var holder=Array.from(patient.querySelectorAll('.field')).find(function(n){return n.querySelector('label') && n.querySelector('label').textContent.trim()==='Plan médico';});
