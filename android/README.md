@@ -64,3 +64,15 @@ This is intentionally a temporary testing solution, not a long-term release
 signing solution. Proper upgrades will require one stable protected signing
 key/keystore stored as a repository secret or a secure build service, never
 committed into this public repository.
+
+### V5 tester checklist
+
+1. Download the ZIP produced by the latest GREEN GitHub Actions run and open its `app-debug.apk`.
+2. **Install as a second app:** find the separate launcher icon named `ANGEL LIFE V5 TEST`.
+3. The native top bar must say `ANGEL LIFE · V5 TEST`, with a green `Guardar PDF` button.
+4. The first screen must show six big navigation cards for sections 01–06.
+5. If the launcher or native toolbar does not show `V5 TEST`, the older APK is running — do not interpret that as a visual test failure.
+
+Android prototype signature changes are confirmed from the v0.3.2 and v0.4.0
+APK signing certificates (SHA-256 differed). Avoid encouraging repeated
+attempts to install newer debug APKs over older debug builds.
