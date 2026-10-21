@@ -209,6 +209,18 @@ document.querySelectorAll('canvas').forEach(c=>{const ctx=c.getContext('2d');c.w
     });
   }
   planSelect();sexButtons();bloodPressure();
+  // Present trip choices in a touch-friendly, mutually exclusive group.
+  var trip=document.querySelector('#dispatch input[name="trip"]');
+  if(trip){
+    var tripHolder=trip.closest('.field');
+    if(tripHolder){
+      tripHolder.innerHTML='<label>Tipo de viaje</label><div class="ale-inline">'+
+        ['Ida','Vuelta','Ida y vuelta'].map(function(x){
+          return '<label class="choice"><input type="radio" name="trip" value="'+safe(x)+'"><span>'+safe(x)+'</span></label>';
+        }).join('')+'</div>';
+    }
+  }
+
 
   // Group the form without dropping original, free-text clinical sections.
   assessment.innerHTML=
@@ -255,7 +267,8 @@ document.querySelectorAll('canvas').forEach(c=>{const ctx=c.getContext('2d');c.w
     ['Paciente no acepta servicios','Rechazo de servicio (firma del paciente o representante)',''],
     ['Paciente no acepta transportación','Rechazo de transportación (firma del paciente o representante)','']
   ];
-  signHost.innerHTML=signConfigs.map(function(arr){
+  function renderSignatureCards(host, configs) {
+  host.innerHTML=configs.map(function(arr){
     var title=arr[0],id=unique(),x=unique(),lic=arr[2]==='lic';
     return '<article class="sign-card"><h3>'+safe(title)+'</h3>'+
       '<p class="sub ale-help">'+safe(arr[1]||'Firma correspondiente')+'</p>'+
@@ -267,6 +280,17 @@ document.querySelectorAll('canvas').forEach(c=>{const ctx=c.getContext('2d');c.w
          '<input id="'+x+'" type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Número de licencia" aria-label="Número de licencia del médico"></div>':'')+
       '</article>';
   }).join('');
+  }
+  renderSignatureCards(signHost,signConfigs);
+  renderSignatureCards(document.getElementById('hipaa-signatures'),[
+    ['Paciente','Firma del paciente',''],
+    ['Representante','Firma del representante',''],
+    ['Empleado','Firma del empleado','']
+  ]);
+  renderSignatureCards(document.getElementById('progress-signatures'),[
+    ['Testigo','Firma del testigo',''],
+    ['Técnico EMS','Firma del técnico de emergencias médicas','']
+  ]);
 
   // Pointer-safe ink: use one pointer at a time; never draw a spurious line after
   // lifting, scrolling, switching tabs or pointer cancellation.
