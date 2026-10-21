@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Build;
+import android.graphics.Insets;
+import android.view.WindowInsets;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
@@ -26,6 +29,21 @@ public class MainActivity extends Activity {
         // Native print action needs no addJavascriptInterface or network access.
         LinearLayout shell = new LinearLayout(this);
         shell.setOrientation(LinearLayout.VERTICAL);
+        // On Android 15+, edge-to-edge otherwise places the Print toolbar
+        // beneath status icons and clips the last field behind navigation.
+        shell.setOnApplyWindowInsetsListener((view, windowInsets) -> {
+            int top, bottom;
+            if (Build.VERSION.SDK_INT >= 30) {
+                Insets bars = windowInsets.getInsets(WindowInsets.Type.systemBars());
+                top = bars.top;
+                bottom = bars.bottom;
+            } else {
+                top = windowInsets.getSystemWindowInsetTop();
+                bottom = windowInsets.getSystemWindowInsetBottom();
+            }
+            view.setPadding(0, top, 0, bottom);
+            return windowInsets;
+        });
 
         printButton = new Button(this);
         printButton.setText("PDF / Imprimir");
