@@ -30,7 +30,7 @@ window.addEventListener('load', function () {
     var $$=function(s){return Array.from(document.querySelectorAll(s))};
     ok(document.documentElement.getAttribute('data-angel-v4-ready')==='yes','v4 fields boot');
     ok(document.documentElement.getAttribute('data-angel-v5-ready')==='yes','v5 redesign boot');
-    ok($('.v5-dashboard a').length===6,'six mobile navigation cards');
+    ok($$('.v5-dashboard a').length===6,'six mobile navigation cards');
     ok($('.v5-topbadge')!==null,'visibly distinct version badge');
     ok($$('.sign-card canvas').length===11,'all signatures present');
     ok($$('.sign-card .print-signature').length===11,'all print signatures present');
